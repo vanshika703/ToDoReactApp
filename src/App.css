@@ -1,15 +1,18 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 
 .App {
   text-align: left;
+  font-family: "Poppins", sans-serif;
 }
 
-.table-row{
-  background: radial-gradient(circle at 12.3% 19.3%, rgb(103, 142, 225) 0%, rgb(122, 220, 247) 100.2%);
+.table-row {
+  background: radial-gradient(
+    circle at 12.3% 19.3%,
+    rgb(103, 142, 225) 0%,
+    rgb(122, 220, 247) 100.2%
+  );
 }
