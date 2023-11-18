@@ -115,9 +115,13 @@ const Dashboard = () => {
               src={trash}
               alt=""
               onClick={handleDeleteSelectedDepartments}
-              className="cursor-pointer"
+              className="cursor-pointer hover:bg-[#E6EEFF] p-2 rounded-full"
             />
-            <img src={edit} alt="" />
+            <img
+              src={edit}
+              alt=""
+              className="cursor-pointer hover:bg-[#E6EEFF] p-2 rounded-full"
+            />
           </div>
         </div>
       </div>
@@ -134,7 +138,7 @@ const Dashboard = () => {
           />
         ))}
       </div>
-      {isPopupVisible && <AddPopup setIsPopupVisible={setIsPopupVisible}/>}
+      {isPopupVisible && <AddPopup setIsPopupVisible={setIsPopupVisible} />}
     </div>
   );
 };
