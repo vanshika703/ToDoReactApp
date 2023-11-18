@@ -61,13 +61,13 @@ const Popup = ({ setIsPopupVisible }) => {
   };
 
   return (
-    <div className="fixed bg-gray-500 top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center">
-      <div className="w-1/3 bg-white mx-auto my-auto rounded-md p-8 relative">
+    <div className="fixed bg-gray-500 top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center popup">
+      <div className="  w-1/3 bg-white mx-auto my-auto rounded-md p-8 relative">
         <button
           onClick={handleClosePopup}
-          className="absolute top-2 right-2 text-[#CACACA] text-lg"
+          className="absolute top-2 right-5 text-[#CACACA] text-2xl"
         >
-          X
+          x
         </button>
         <p className="text-xl font-medium">Edit view</p>
         <p className="text-sm font-medium text-[#646464]">
