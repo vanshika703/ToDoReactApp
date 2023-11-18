@@ -8,11 +8,62 @@ import AddPopup from "./AddPopup";
 const Dashboard = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [departments, setDepartments] = useState([]);
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  useEffect(() => {}, departments);
+
   const handleOpenPopup = () => {
     setIsPopupVisible(true);
+  };
+
+  const handleCheckboxChange = (departmentId) => {
+    const updatedSelection = [...selectedDepartments];
+    const index = updatedSelection.indexOf(departmentId);
+
+    if (index === -1) {
+      updatedSelection.push(departmentId);
+    } else {
+      updatedSelection.splice(index, 1);
+    }
+
+    setSelectedDepartments(updatedSelection);
+  };
+
+  const handleDeleteSelectedDepartments = async () => {
+    try {
+      const authToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGZlMTc4MjMyMzIwNmVmMjViOWJiOSIsImlhdCI6MTcwMDI4NDA2MywiZXhwIjoxNzAwNTQzMjYzfQ.rSQ0blzVCB5LfqJDagQW78YUkfsb7Cmt2bf97Fetems";
+
+      for (const departmentId of selectedDepartments) {
+        const response = await fetch(
+          `https://shlok-mittal-lawyer-backend.vercel.app/api/v1/admin/department/${departmentId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          setError(`Failed to delete department with ID: ${departmentId}`);
+          return;
+        }
+      }
+
+      setDepartments((prevDepartments) =>
+        prevDepartments.filter(
+          (department) => !selectedDepartments.includes(department._id)
+        )
+      );
+      setSelectedDepartments([]);
+    } catch (error) {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -26,7 +77,6 @@ const Dashboard = () => {
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${authToken}`,
             },
           }
@@ -46,7 +96,7 @@ const Dashboard = () => {
     };
 
     fetchDepartments();
-  }, []);
+  }, [isPopupVisible]);
 
   return (
     <div>
@@ -61,7 +111,12 @@ const Dashboard = () => {
             >
               Create Department
             </button>
-            <img src={trash} alt="" />
+            <img
+              src={trash}
+              alt=""
+              onClick={handleDeleteSelectedDepartments}
+              className="cursor-pointer"
+            />
             <img src={edit} alt="" />
           </div>
         </div>
@@ -73,10 +128,13 @@ const Dashboard = () => {
           <DepartmentCard
             key={department._id}
             departmentName={department.name}
+            departmentId={department._id}
+            isChecked={selectedDepartments.includes(department._id)}
+            onCheckboxChange={handleCheckboxChange}
           />
         ))}
       </div>
-      {isPopupVisible && <AddPopup setIsPopupVisible={setIsPopupVisible} />}
+      {isPopupVisible && <AddPopup setIsPopupVisible={setIsPopupVisible}/>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Popup = ({setIsPopupVisible}) => {
+const Popup = ({ setIsPopupVisible }) => {
   const [departmentName, setDepartmentName] = useState("");
   const [departmentType, setDepartmentType] = useState("");
   const [departmentCategory, setDepartmentCategory] = useState("");
@@ -13,19 +13,15 @@ const Popup = ({setIsPopupVisible}) => {
   };
 
   const handleSaveChanges = async () => {
-    // Check if the departmentName is not empty
     if (!departmentName) {
       setError("Department Name is required.");
       return;
     }
 
-    // Clear any previous errors
     setError(null);
 
-    // Set loading state
     setLoading(true);
 
-    // Prepare the data to send to the API
     const requestData = {
       name: departmentName,
       type: departmentType,
@@ -33,11 +29,9 @@ const Popup = ({setIsPopupVisible}) => {
       additionalInfo: additionalInfo,
     };
 
-    // Your API endpoint
     const apiUrl =
       "https://shlok-mittal-lawyer-backend.vercel.app/api/v1/admin/createDepartment";
 
-    // Your authentication token
     const authToken =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGZlMTc4MjMyMzIwNmVmMjViOWJiOSIsImlhdCI6MTcwMDI4NDA2MywiZXhwIjoxNzAwNTQzMjYzfQ.rSQ0blzVCB5LfqJDagQW78YUkfsb7Cmt2bf97Fetems";
 
@@ -52,11 +46,9 @@ const Popup = ({setIsPopupVisible}) => {
       });
 
       if (response.ok) {
-        // Department added successfully, you can handle success here
         console.log("Department added successfully");
-        setDepartmentName(""); // Clear the input field on success
+        setDepartmentName(""); 
       } else {
-        // Handle API errors
         const errorData = await response.json();
         setError(errorData.message || "Something went wrong");
       }
